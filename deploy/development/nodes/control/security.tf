@@ -1,6 +1,6 @@
 
 resource "aws_security_group" "local" {
-  vpc_id = "${terraform_remote_state.network.output.vpc_id}"
+  vpc_id = "${data.terraform_remote_state.network.vpc_id}"
 
   tags {
     Name = "local"

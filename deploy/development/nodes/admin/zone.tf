@@ -1,7 +1,7 @@
 resource "aws_route53_record" "admin" {
   zone_id = "${data.terraform_remote_state.public.zone_id}"
 
-  name = "admin"
+  name = "admin-${var.deploy}"
   type = "A"
   ttl = "300"
 

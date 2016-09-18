@@ -1,5 +1,5 @@
 resource "aws_route53_record" "consul" {
-  zone_id = "${terraform_remote_state.network.output.zone_id}"
+  zone_id = "${data.terraform_remote_state.network.zone_id}"
 
   name = "consul-${count.index + 1}"
   type = "A"
@@ -11,7 +11,7 @@ resource "aws_route53_record" "consul" {
 }
 
 resource "aws_route53_record" "etcd" {
-  zone_id = "${terraform_remote_state.network.output.zone_id}"
+  zone_id = "${data.terraform_remote_state.network.zone_id}"
 
   name = "etcd-${count.index + 1}"
   type = "A"
@@ -23,7 +23,7 @@ resource "aws_route53_record" "etcd" {
 }
 
 resource "aws_route53_record" "etcd-server" {
-  zone_id = "${terraform_remote_state.network.output.zone_id}"
+  zone_id = "${data.terraform_remote_state.network.zone_id}"
 
   name = "_etcd-server._tcp"
   type = "SRV"
@@ -33,7 +33,7 @@ resource "aws_route53_record" "etcd-server" {
 }
 
 resource "aws_route53_record" "etcd-client" {
-  zone_id = "${terraform_remote_state.network.output.zone_id}"
+  zone_id = "${data.terraform_remote_state.network.zone_id}"
 
   name = "_etcd-client._tcp"
   type = "SRV"

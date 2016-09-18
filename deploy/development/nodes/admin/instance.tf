@@ -55,7 +55,7 @@ resource "aws_instance" "local" {
     Managed = "Terraform"
   }
 
-  depends_on = [ "aws_eip.local" ]
+  //depends_on = [ "aws_eip.local" ]
 }
 
 resource "aws_eip" "local" {
