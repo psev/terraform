@@ -3,7 +3,7 @@ resource "aws_security_group" "local" {
   vpc_id = "${data.terraform_remote_state.network.vpc_id}"
 
   tags {
-    Name = "local"
+    Name = "${var.name}-${var.deploy}"
   }
 }
 
