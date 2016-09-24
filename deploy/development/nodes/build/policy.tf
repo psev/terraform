@@ -27,10 +27,10 @@ resource "aws_iam_policy" "ec2" {
   "Statement": [
     {
       "Action": [
-        "ec2:Describe*"
+        "s3:PutObject"
       ],
       "Effect": "Allow",
-      "Resource": "*"
+      "Resource": "arn:aws:s3:::${var.region}-${var.deploy}-archlinux-repository/*"
     }
   ]
 }
