@@ -27,7 +27,7 @@ resource "aws_iam_policy" "ec2" {
   "Statement": [
     {
       "Action": [
-        "ec2:Describe*",
+        "ec2:DescribeInstances"
       ],
       "Effect": "Allow",
       "Resource": "*"
