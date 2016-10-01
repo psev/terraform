@@ -48,6 +48,6 @@ resource "aws_instance" "local" {
 
   tags {
     Name = "${var.name}-${var.deploy}"
-    Managed = "Terraform"
+    Managed = "terraform-${var.deploy}"
   }
 }

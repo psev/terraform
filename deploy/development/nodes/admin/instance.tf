@@ -52,7 +52,7 @@ resource "aws_instance" "local" {
 
   tags {
     Name = "${var.name}-${var.deploy}"
-    Managed = "Terraform"
+    Managed = "terraform-${var.deploy}"
   }
 
   //depends_on = [ "aws_eip.local" ]

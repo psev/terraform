@@ -7,7 +7,7 @@ variable "type" {
 }
 
 variable "nodes" {
-  default = 1
+  default = 3
 }
 
 variable "tags" {
@@ -52,6 +52,6 @@ resource "aws_instance" "local" {
 
   tags {
     Name = "${var.name}-${var.deploy}"
-    Managed = "Terraform"
+    Managed = "terraform-${var.deploy}"
   }
 }

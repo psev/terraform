@@ -40,7 +40,7 @@ resource "aws_instance" "local" {
   ami = "${element(split(",", lookup(var.amis, var.region)), 0)}"
   key_name = "${var.key}"
   instance_type = "${var.type}"
-  subnet_id = "${element(split(",", terraform_remote_state.network.output.private_subnet_ids), count.index)}"
+  subnet_id = "${element(split(",", data.terraform_remote_state.network.private_subnet_ids), count.index)}"
   vpc_security_group_ids = [ "${aws_security_group.local.id}" ]
   user_data = "${template_file.user_data.rendered}"
 
@@ -48,6 +48,6 @@ resource "aws_instance" "local" {
 
   tags {
     Name = "${var.name}-${var.deploy}"
-    Managed = "Terraform"
+    Managed = "terraform-${var.deploy}"  
   }
 }
