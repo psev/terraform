@@ -2,6 +2,10 @@
 
 pacman --noconfirm -Sy ansible git
 
+# create a new machine id, required due to cloned AMI
+rm /etc/machine-id
+systemd-machine-id-setup
+
 UUID=$(uuidgen)
 IFS='-' read ID EXTRA <<< "$${UUID}"
 
