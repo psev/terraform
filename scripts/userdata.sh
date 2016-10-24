@@ -17,7 +17,7 @@ ANSIBLE_REPO="${ansible_repo}"
 
 HOSTNAME=${name}-$${ID}
 REGION=${region}
-TAGS=${tags}
+ROLE=${role}
 DEPLOY=${deploy}
 EOF
 

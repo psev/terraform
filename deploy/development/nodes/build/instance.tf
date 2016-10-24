@@ -10,8 +10,8 @@ variable "nodes" {
   default = 1
 }
 
-variable "tags" {
-  default = "base,build"
+variable "role" {
+  default = "build"
 }
 
 output "nodes" {
@@ -34,7 +34,7 @@ data "template_file" "userdata" {
     ansible_repo = "${var.ansible_repo}"
 
     name = "${var.name}-${var.deploy}"
-    tags = "${var.tags}"
+    role = "${var.role}"
     deploy = "${var.deploy}"
     region = "${var.region}"
   }
@@ -49,11 +49,6 @@ resource "aws_instance" "local" {
   user_data = "${data.template_file.userdata.rendered}"
   iam_instance_profile = "${aws_iam_instance_profile.ec2.name}"
   count = "${var.nodes}"
-
-  root_block_device {
-    volume_type = "gp2"
-    volume_size = 200
-  }
 
   tags {
     Name = "${var.name}-${var.deploy}"

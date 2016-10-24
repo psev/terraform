@@ -1,5 +1,5 @@
 variable "name" {
-  default = "admin"
+  default = "registry"
 }
 
 variable "type" {
@@ -11,7 +11,7 @@ variable "nodes" {
 }
 
 variable "role" {
-  default = "admin"
+  default = "registry"
 }
 
 output "nodes" {
@@ -37,7 +37,6 @@ data "template_file" "userdata" {
     role = "${var.role}"
     deploy = "${var.deploy}"
     region = "${var.region}"
-    identifier = "${var.identifier}"
   }
 }
 
@@ -45,7 +44,7 @@ resource "aws_instance" "local" {
   ami = "${element(split(",", lookup(var.amis, var.region)), 0)}"
   key_name = "${var.key}"
   instance_type = "${var.type}"
-  subnet_id = "${element(split(",", data.terraform_remote_state.network.public_subnet_ids), count.index)}"
+  subnet_id = "${element(split(",", data.terraform_remote_state.network.private_subnet_ids), count.index)}"
   vpc_security_group_ids = [ "${aws_security_group.local.id}" ]
   user_data = "${data.template_file.userdata.rendered}"
   iam_instance_profile = "${aws_iam_instance_profile.ec2.name}"
@@ -57,10 +56,4 @@ resource "aws_instance" "local" {
   }
 
   //depends_on = [ "aws_eip.local" ]
-}
-
-resource "aws_eip" "local" {
-  instance = "${element(aws_instance.local.*.id, count.index)}"
-  count = "${var.nodes}"
-  vpc = true
 }

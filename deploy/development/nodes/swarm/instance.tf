@@ -1,5 +1,5 @@
 variable "name" {
-  default = "worker"
+  default = "swarm"
 }
 
 variable "type" {
@@ -10,19 +10,23 @@ variable "nodes" {
   default = 3
 }
 
-variable "tags" {
-  default = "base,worker"
-}
-
-variable "extra" {
-  default = ""
+variable "role" {
+  default = "swarm"
 }
 
 output "nodes" {
   value = "${var.nodes}"
 }
 
-resource "template_file" "user_data" {
+output "private_ips" {
+  value = "${join(",", aws_instance.local.*.private_ip)}"
+}
+
+output "public_ips" {
+  value = "${join(",", aws_instance.local.*.public_ip)}"
+}
+
+data "template_file" "userdata" {
   template = "${file("${path.module}/scripts/userdata.sh")}"
 
   vars {
@@ -30,7 +34,7 @@ resource "template_file" "user_data" {
     ansible_repo = "${var.ansible_repo}"
 
     name = "${var.name}-${var.deploy}"
-    tags = "${var.tags}"
+    role = "${var.role}"
     deploy = "${var.deploy}"
     region = "${var.region}"
   }
@@ -42,12 +46,12 @@ resource "aws_instance" "local" {
   instance_type = "${var.type}"
   subnet_id = "${element(split(",", data.terraform_remote_state.network.private_subnet_ids), count.index)}"
   vpc_security_group_ids = [ "${aws_security_group.local.id}" ]
-  user_data = "${template_file.user_data.rendered}"
-
+  user_data = "${data.template_file.userdata.rendered}"
+  iam_instance_profile = "${aws_iam_instance_profile.ec2.name}"
   count = "${var.nodes}"
 
   tags {
     Name = "${var.name}-${var.deploy}"
-    Managed = "terraform-${var.deploy}"  
+    Managed = "terraform-${var.deploy}"
   }
 }

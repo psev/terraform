@@ -1,5 +1,5 @@
 resource "aws_iam_role" "ec2" {
-  name = "${var.region}-${var.deploy}-${var.name}-ec2"
+  name = "${var.identifier}-${var.region}-${var.deploy}-${var.name}-ec2"
   path = "/instance/"
   assume_role_policy = <<EOF
 {
@@ -19,7 +19,7 @@ EOF
 }
 
 resource "aws_iam_policy" "ec2" {
-  name = "${var.region}-${var.deploy}-${var.name}-ec2"
+  name = "${var.identifier}-${var.region}-${var.deploy}-${var.name}-ec2"
   path = "/instance/"
   policy = <<EOF
 {
@@ -38,13 +38,13 @@ EOF
 }
 
 resource "aws_iam_policy_attachment" "ec2" {
-  name = "${var.region}-${var.deploy}-${var.name}-ec2"
+  name = "${var.identifier}-${var.region}-${var.deploy}-${var.name}-ec2"
   roles = [ "${aws_iam_role.ec2.name}" ]
   policy_arn = "${aws_iam_policy.ec2.arn}"
 }
 
 resource "aws_iam_instance_profile" "ec2" {
-  name = "${var.region}-${var.deploy}-${var.name}-ec2"
+  name = "${var.identifier}-${var.region}-${var.deploy}-${var.name}-ec2"
   path = "/instance/"
   roles = [ "${aws_iam_role.ec2.name}" ]
 }

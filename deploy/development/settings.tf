@@ -1,5 +1,5 @@
 variable "deploy" {
-  default = "development"
+  default = "alpha"
 }
 
 data "terraform_remote_state" "network" {

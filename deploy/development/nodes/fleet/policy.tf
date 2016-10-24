@@ -1,5 +1,5 @@
 resource "aws_iam_role" "ec2" {
-  name = "${var.identifier}-${var.region}-${var.deploy}-${var.name}-ec2"
+  name = "${var.region}-${var.deploy}-${var.name}-ec2"
   path = "/instance/"
   assume_role_policy = <<EOF
 {
@@ -19,7 +19,7 @@ EOF
 }
 
 resource "aws_iam_policy" "ec2" {
-  name = "${var.identifier}-${var.region}-${var.deploy}-${var.name}-ec2"
+  name = "${var.region}-${var.deploy}-${var.name}-ec2"
   path = "/instance/"
   policy = <<EOF
 {
@@ -27,10 +27,14 @@ resource "aws_iam_policy" "ec2" {
   "Statement": [
     {
       "Action": [
-        "ec2:DescribeInstances"
+        "s3:ListBucket",
+        "s3:GetObject"
       ],
       "Effect": "Allow",
-      "Resource": "*"
+      "Resource": [
+        "arn:aws:s3:::${var.identifier}-${var.region}-${var.deploy}-archlinux-repository",
+        "arn:aws:s3:::${var.identifier}-${var.region}-${var.deploy}-archlinux-repository/fleet-*"
+      ]
     }
   ]
 }
@@ -38,13 +42,13 @@ EOF
 }
 
 resource "aws_iam_policy_attachment" "ec2" {
-  name = "${var.identifier}-${var.region}-${var.deploy}-${var.name}-ec2"
+  name = "${var.region}-${var.deploy}-${var.name}-ec2"
   roles = [ "${aws_iam_role.ec2.name}" ]
   policy_arn = "${aws_iam_policy.ec2.arn}"
 }
 
 resource "aws_iam_instance_profile" "ec2" {
-  name = "${var.identifier}-${var.region}-${var.deploy}-${var.name}-ec2"
+  name = "${var.region}-${var.deploy}-${var.name}-ec2"
   path = "/instance/"
   roles = [ "${aws_iam_role.ec2.name}" ]
 }

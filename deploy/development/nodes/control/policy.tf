@@ -27,10 +27,15 @@ resource "aws_iam_policy" "ec2" {
   "Statement": [
     {
       "Action": [
-        "ec2:DescribeInstances"
+        "s3:ListBucket",
+        "s3:GetObject",
+        "s3:PutObject"
       ],
       "Effect": "Allow",
-      "Resource": "*"
+      "Resource": [
+        "arn:aws:s3:::${var.identifier}-${var.region}-${var.deploy}-consul-backup",
+        "arn:aws:s3:::${var.identifier}-${var.region}-${var.deploy}-consul-backup/*"
+      ]
     }
   ]
 }

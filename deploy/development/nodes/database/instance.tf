@@ -7,11 +7,11 @@ variable "type" {
 }
 
 variable "nodes" {
-  default = 3
+  default = 1
 }
 
-variable "tags" {
-  default = "base,database"
+variable "role" {
+  default = "database"
 }
 
 output "nodes" {
@@ -34,7 +34,7 @@ data "template_file" "userdata" {
     ansible_repo = "${var.ansible_repo}"
 
     name = "${var.name}-${var.deploy}"
-    tags = "${var.tags}"
+    role = "${var.role}"
     deploy = "${var.deploy}"
     region = "${var.region}"
   }
@@ -48,6 +48,7 @@ resource "aws_instance" "local" {
   vpc_security_group_ids = [ "${aws_security_group.local.id}" ]
   user_data = "${data.template_file.userdata.rendered}"
   iam_instance_profile = "${aws_iam_instance_profile.ec2.name}"
+  
   count = "${var.nodes}"
 
   tags {

@@ -8,7 +8,7 @@ output "region" {
 
 
 variable "identifier" {
-  default = "deepfield"
+  default = "sugarush"
 }
 
 output "identifier" {
@@ -30,6 +30,6 @@ variable "key" {
 
 variable "amis" {
   default = {
-    us-west-2 = "ami-9429fff4"
+    us-west-2 = "ami-000ed560"
   }
 }
