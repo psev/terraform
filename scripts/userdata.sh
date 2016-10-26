@@ -15,10 +15,12 @@ ID=$${ID}
 
 ANSIBLE_REPO="${ansible_repo}"
 
-HOSTNAME=${name}-$${ID}
+HOSTNAME=${hostname}-$${ID}
+
 REGION=${region}
 ROLE=${role}
 DEPLOY=${deploy}
+IDENTIFIER=${identifier}
 EOF
 
 cat <<EOF > /root/.ssh/github

@@ -1,12 +1,3 @@
-variable "region" {
-  default = "us-west-2"
-}
-
-output "region" {
-  value = "${var.region}"
-}
-
-
 variable "identifier" {
   default = "sugarush"
 }
