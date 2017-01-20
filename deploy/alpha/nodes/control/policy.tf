@@ -36,6 +36,19 @@ resource "aws_iam_policy" "ec2" {
         "arn:aws:s3:::${var.identifier}-${var.region}-${var.deploy}-consul-backup",
         "arn:aws:s3:::${var.identifier}-${var.region}-${var.deploy}-consul-backup/*"
       ]
+    },
+    {
+      "Action": [
+        "s3:ListBucket",
+        "s3:GetObject"
+      ],
+      "Effect": "Allow",
+      "Resource": [
+        "arn:aws:s3:::${var.identifier}-${var.region}-${var.deploy}-archlinux-repository",
+        "arn:aws:s3:::${var.identifier}-${var.region}-${var.deploy}-archlinux-repository/consul-*",
+        "arn:aws:s3:::${var.identifier}-${var.region}-${var.deploy}-archlinux-repository/telegraf-*",
+        "arn:aws:s3:::${var.identifier}-${var.region}-${var.deploy}-archlinux-repository/influxdb-*"
+      ]
     }
   ]
 }

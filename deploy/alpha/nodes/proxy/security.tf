@@ -1,4 +1,3 @@
-
 resource "aws_security_group" "local" {
   vpc_id = "${data.terraform_remote_state.network.vpc_id}"
 
@@ -27,16 +26,12 @@ resource "aws_security_group_rule" "private-out" {
   security_group_id = "${aws_security_group.local.id}"
 }
 
-resource "aws_security_group_rule" "ssh-private-in" {
+resource "aws_security_group_rule" "ssh-world-in" {
   type = "ingress"
   protocol = "tcp"
   from_port = 22
   to_port = 22
-  cidr_blocks = [
-  # Allow SSH to local nodes
-  "10.0.0.0/8",
-  "172.16.0.0/12",
-  ]
+  cidr_blocks = ["107.50.144.142/32"]
 
   security_group_id = "${aws_security_group.local.id}"
 }

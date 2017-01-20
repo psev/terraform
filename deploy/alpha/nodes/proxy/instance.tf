@@ -1,5 +1,5 @@
 variable "role" {
-  default = "monitor"
+  default = "proxy"
 }
 
 variable "type" {
@@ -41,15 +41,22 @@ resource "aws_instance" "local" {
   ami = "${element(split(",", lookup(var.amis, var.region)), 0)}"
   key_name = "${var.key}"
   instance_type = "${var.type}"
-  subnet_id = "${element(split(",", data.terraform_remote_state.network.private_subnet_ids), count.index)}"
+  subnet_id = "${element(split(",", data.terraform_remote_state.network.public_subnet_ids), count.index)}"
   vpc_security_group_ids = [ "${aws_security_group.local.id}" ]
   user_data = "${data.template_file.user_data.rendered}"
   iam_instance_profile = "${aws_iam_instance_profile.ec2.name}"
-
   count = "${var.nodes}"
 
   tags {
     Name = "${var.role}-${var.deploy}"
     Managed = "terraform-${var.deploy}"
   }
+
+  //depends_on = [ "aws_eip.local" ]
+}
+
+resource "aws_eip" "local" {
+  instance = "${element(aws_instance.local.*.id, count.index)}"
+  count = "${var.nodes}"
+  vpc = true
 }

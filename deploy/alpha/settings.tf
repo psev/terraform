@@ -1,5 +1,5 @@
 variable "region" {
-  default = "us-west-2"
+  default = "us-east-1"
 }
 
 variable "deploy" {
@@ -10,18 +10,18 @@ data "terraform_remote_state" "network" {
   backend = "s3"
 
   config {
-    bucket = "deepfield-global-terraform-state"
-    key = "deploy/development/network"
-    region = "us-west-2"
+    bucket = "${var.identifier}-us-east-1-terraform-state"
+    key = "deploy/alpha/network"
+    region = "us-east-1"
   }
 }
 
-data "terraform_remote_state" "public" {
+data "terraform_remote_state" "sugarush-io" {
   backend = "s3"
 
   config {
-    bucket = "deepfield-global-terraform-state"
-    key = "deploy/public"
-    region = "us-west-2"
+    bucket = "${var.identifier}-us-east-1-terraform-state"
+    key = "zone/sugarush.io"
+    region = "us-east-1"
   }
 }

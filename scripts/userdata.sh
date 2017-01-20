@@ -6,8 +6,8 @@ pacman --noconfirm -Sy ansible git
 rm /etc/machine-id
 systemd-machine-id-setup
 
-UUID=$(uuidgen)
-IFS='-' read ID EXTRA <<< "$${UUID}"
+UUID=$(cat /etc/machine-id)
+ID=$${UUID:0:7}
 
 cat <<EOF >> /etc/environment
 UUID=$${UUID}
