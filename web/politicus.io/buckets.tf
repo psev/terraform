@@ -1,5 +1,5 @@
-resource "aws_s3_bucket_policy" "napalmbrain-io" {
-  bucket = "${aws_s3_bucket.napalmbrain-io.bucket}"
+resource "aws_s3_bucket_policy" "politicus-io" {
+  bucket = "${aws_s3_bucket.politicus-io.bucket}"
   policy = <<EOF
 {
   "Version":"2012-10-17",
@@ -12,8 +12,8 @@ resource "aws_s3_bucket_policy" "napalmbrain-io" {
         "s3:GetObject"
       ],
       "Resource":[
-        "${aws_s3_bucket.napalmbrain-io.arn}",
-        "${aws_s3_bucket.napalmbrain-io.arn}/*"
+        "${aws_s3_bucket.politicus-io.arn}",
+        "${aws_s3_bucket.politicus-io.arn}/*"
       ]
     }
   ]
@@ -21,8 +21,8 @@ resource "aws_s3_bucket_policy" "napalmbrain-io" {
 EOF
 }
 
-resource "aws_s3_bucket" "napalmbrain-io" {
-  bucket = "napalmbrain.io"
+resource "aws_s3_bucket" "politicus-io" {
+  bucket = "politicus.io"
   acl = "public-read"
   region = "${var.region}"
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-pacman --noconfirm -Sy ansible git
+#pacman --noconfirm -Sy ansible git
 
 # create a new machine id, required due to cloned AMI
 rm /etc/machine-id
@@ -40,9 +40,14 @@ Requires=network-online.target
 After=network-online.target
 
 [Service]
+Type=oneshot
+RemainAfterExit=true
+
 EnvironmentFile=/etc/environment
 
 ExecStartPre=-/usr/bin/git clone \$${ANSIBLE_REPO} /root/ansible
+ExecStartPre=/usr/bin/git -C /root/ansible fetch
+ExecStartPre=/usr/bin/git -C /root/ansible checkout \$${DEPLOY}
 ExecStartPre=/usr/bin/git -C /root/ansible pull
 
 ExecStart=/usr/bin/ansible-playbook -i /root/ansible/inventory /root/ansible/archlinux/bootstrap.yml -e "ansible_python_interpreter=/usr/bin/python2"
@@ -54,4 +59,5 @@ chmod 700 /root/.ssh
 chmod 600 /root/.ssh/github
 chmod 600 /root/.ssh/config
 
-systemctl start bootstrap.service
+systemctl restart systemd-journald
+systemctl start bootstrap

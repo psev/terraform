@@ -31,7 +31,7 @@ resource "aws_security_group_rule" "ssh-world-in" {
   protocol = "tcp"
   from_port = 22
   to_port = 22
-  cidr_blocks = ["107.50.144.142/32"]
+  cidr_blocks = ["0.0.0.0/0"]
 
   security_group_id = "${aws_security_group.local.id}"
 }

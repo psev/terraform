@@ -1,5 +1,5 @@
 variable "origin_id" {
-  default = "napalmbrain.io"
+  default = "politicus.io"
 }
 
 resource "aws_cloudfront_distribution" "blog_front" {
@@ -55,7 +55,7 @@ resource "aws_cloudfront_distribution" "blog_front" {
 
   viewer_certificate {
     ssl_support_method = "sni-only"
-    acm_certificate_arn = "arn:aws:acm:us-east-1:652495891140:certificate/4c62db4a-4cb8-46f9-853f-f342f8224696"
+    acm_certificate_arn = "arn:aws:acm:us-east-1:652495891140:certificate/e49822a0-8907-4265-b52b-47971327ccf3"
     minimum_protocol_version = "TLSv1"
     cloudfront_default_certificate = false
   }

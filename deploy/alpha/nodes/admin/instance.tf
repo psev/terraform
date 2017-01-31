@@ -3,7 +3,7 @@ variable "role" {
 }
 
 variable "type" {
-  default = "t2.small"
+  default = "t2.micro"
 }
 
 variable "nodes" {
@@ -51,6 +51,4 @@ resource "aws_instance" "local" {
     Name = "${var.role}-${var.deploy}"
     Managed = "terraform-${var.deploy}"
   }
-
-  //depends_on = [ "aws_eip.local" ]
 }

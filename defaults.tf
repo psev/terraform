@@ -20,10 +20,8 @@ variable "key" {
 
 variable "amis" {
   default = {
-    #us-east-1 = "ami-366c8020"
     us-east-1 = "ami-9527cc83"
-    us-west-1 = "ami-2cb3e74c"
-    us-west-2 = "ami-000ed560"
+    us-west-2 = "ami-b01da3d0"
   }
 }
 
