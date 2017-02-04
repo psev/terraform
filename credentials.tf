@@ -1,9 +1,9 @@
 variable "aws_key" {
-  default = "AKIAJDFCAQTEKPKXI4HQ"
+  default = "AKIAIUPTPEKUHKFO3DNA"
 }
 
 variable "aws_secret" {
-  default = "JTKXhubvMzGZzlNTJpH4Rsoh9tzXFb5OzgsEvgJW"
+  default = "94j0bKlA0+2VCOZk8+jCaZORA6aCkaWXgjvohm4G"
 }
 
 provider "aws" {
