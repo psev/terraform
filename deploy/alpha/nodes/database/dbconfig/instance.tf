@@ -1,5 +1,9 @@
 variable "role" {
-  default = "database"
+  default = "dbconfig"
+}
+
+variable "cluster" {
+  default = "primary"
 }
 
 variable "type" {
@@ -7,7 +11,7 @@ variable "type" {
 }
 
 variable "nodes" {
-  default = 1
+  default = 3
 }
 
 output "nodes" {
@@ -29,7 +33,7 @@ data "template_file" "user_data" {
     ansible_key = "${file("${path.module}/scripts/github.key")}"
     ansible_repo = "${var.ansible_repo}"
 
-    hostname = "${var.role}-${var.deploy}"
+    hostname = "${var.role}-${var.cluster}-${var.deploy}"
     role = "${var.role}"
     deploy = "${var.deploy}"
     region = "${var.region}"
@@ -49,7 +53,9 @@ resource "aws_instance" "local" {
   count = "${var.nodes}"
 
   tags {
-    Name = "${var.role}-${var.deploy}"
+    Name = "${var.role}-${var.cluster}-${var.deploy}"
     Managed = "terraform-${var.deploy}"
+
+    Cluster = "${var.cluster}"
   }
 }
